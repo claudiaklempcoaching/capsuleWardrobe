@@ -3,720 +3,287 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deine Capsule Wardrobe – La Maison Vivante</title>
+<title>Deine Capsule Wardrobe - La Maison Vivante</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sarina&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #f1ecec;
-    --text: #57414d;
-    --highlight: #997c42;
-    --main: #ccd8c6;
-    --accent: #ca6e94;
-  }
-  body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: 'Trebuchet MS', sans-serif;
-    min-height: 100vh;
-    padding: 2.5rem 1rem 5rem;
-  }
-  body::before {
-    content: '';
-    position: fixed; top: -120px; right: -120px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(202,110,148,0.12) 0%, transparent 70%);
-    pointer-events: none; z-index: 0;
-  }
-  body::after {
-    content: '';
-    position: fixed; bottom: -100px; left: -100px;
-    width: 450px; height: 450px;
-    background: radial-gradient(circle, rgba(153,124,66,0.09) 0%, transparent 70%);
-    pointer-events: none; z-index: 0;
-  }
+  :root { --bg: #f1ecec; --text: #57414d; --highlight: #997c42; --main: #ccd8c6; --accent: #ca6e94; }
+  body { background-color: var(--bg); color: var(--text); font-family: 'Trebuchet MS', sans-serif; min-height: 100vh; padding: 2.5rem 1rem 5rem; }
+  body::before { content: ''; position: fixed; top: -120px; right: -120px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(202,110,148,0.12) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+  body::after { content: ''; position: fixed; bottom: -100px; left: -100px; width: 450px; height: 450px; background: radial-gradient(circle, rgba(153,124,66,0.09) 0%, transparent 70%); pointer-events: none; z-index: 0; }
   .container { max-width: 740px; margin: 0 auto; position: relative; z-index: 1; }
-
-  /* HEADER */
   .header { text-align: center; margin-bottom: 2.5rem; }
-  .brand {
-    font-family: 'Sarina', cursive;
-    color: var(--accent); font-size: 0.95rem;
-    display: block; margin-bottom: 0.5rem; letter-spacing: 0.02em;
-    opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s;
-  }
-  h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    color: var(--text); line-height: 1.2; text-align: center;
-    opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s;
-  }
+  .brand { font-family: 'Sarina', cursive; color: var(--accent); font-size: 0.95rem; display: block; margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s; }
+  h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--text); line-height: 1.2; text-align: center; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
   h1 em { font-style: italic; color: var(--highlight); }
-  .subtitle {
-    text-align: center; margin-top: 0.9rem;
-    font-size: 0.95rem; color: var(--text); opacity: 0;
-    line-height: 1.65; animation: fadeUp 0.6s ease forwards 0.3s;
-  }
-  .divider {
-    width: 64px; height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--highlight));
-    margin: 1.5rem auto; border-radius: 2px;
-    opacity: 0; animation: fadeUp 0.5s ease forwards 0.35s;
-  }
-
-  /* PROGRESS */
-  .step-indicator {
-    display: flex; justify-content: center; gap: 0.55rem;
-    margin-bottom: 1rem;
-    opacity: 0; animation: fadeUp 0.5s ease forwards 0.4s;
-  }
+  .subtitle { text-align: center; margin-top: 0.9rem; font-size: 0.95rem; color: var(--text); opacity: 0; line-height: 1.65; animation: fadeUp 0.6s ease forwards 0.3s; }
+  .divider { width: 64px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--highlight)); margin: 1.5rem auto; border-radius: 2px; opacity: 0; animation: fadeUp 0.5s ease forwards 0.35s; }
+  .step-indicator { display: flex; justify-content: center; gap: 0.55rem; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.5s ease forwards 0.4s; }
   .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--main); transition: all 0.3s; }
   .step-dot.active { background: var(--accent); transform: scale(1.4); }
   .step-dot.done { background: var(--highlight); }
-  .progress-wrap {
-    background: rgba(87,65,77,0.1); border-radius: 10px; height: 4px;
-    margin-bottom: 2rem; overflow: hidden;
-    opacity: 0; animation: fadeUp 0.5s ease forwards 0.42s;
-  }
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--highlight));
-    border-radius: 10px; transition: width 0.5s ease;
-  }
-
-  /* INPUT SECTION */
-  .input-section {
-    background: rgba(87,65,77,0.07);
-    border: 1px solid rgba(87,65,77,0.12);
-    border-radius: 18px; padding: 2.2rem 2rem; margin-bottom: 1.5rem;
-    opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s;
-  }
-  .section-label {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.3rem; color: var(--text); text-align: center; margin-bottom: 0.4rem;
-  }
-  .section-hint {
-    font-size: 0.83rem; color: var(--text); opacity: 0.6;
-    text-align: center; margin-bottom: 1.6rem; line-height: 1.55;
-  }
-
-  /* CHOICE CARDS */
+  .progress-wrap { background: rgba(87,65,77,0.1); border-radius: 10px; height: 4px; margin-bottom: 2rem; overflow: hidden; opacity: 0; animation: fadeUp 0.5s ease forwards 0.42s; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--highlight)); border-radius: 10px; transition: width 0.5s ease; }
+  .input-section { background: rgba(87,65,77,0.07); border: 1px solid rgba(87,65,77,0.12); border-radius: 18px; padding: 2.2rem 2rem; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s; }
+  .section-label { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--text); text-align: center; margin-bottom: 0.4rem; }
+  .section-hint { font-size: 0.83rem; color: var(--text); opacity: 0.6; text-align: center; margin-bottom: 1.6rem; line-height: 1.55; }
   .choice-group { margin-bottom: 1.4rem; }
-  .choice-label {
-    display: block; font-size: 0.89rem; font-weight: 600;
-    color: var(--text); margin-bottom: 0.3rem;
-  }
+  .choice-label { display: block; font-size: 0.89rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
   .choice-hint { font-size: 0.78rem; color: var(--text); opacity: 0.5; margin-bottom: 0.8rem; }
-  .choice-options {
-    display: flex; flex-wrap: wrap; gap: 0.5rem;
-  }
-  .choice-btn {
-    padding: 0.55rem 1rem;
-    background: rgba(87,65,77,0.05);
-    border: 1.5px solid rgba(87,65,77,0.15);
-    border-radius: 30px; font-size: 0.83rem;
-    color: var(--text); cursor: pointer;
-    transition: all 0.2s; font-family: 'Trebuchet MS', sans-serif;
-  }
+  .choice-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .choice-btn { padding: 0.55rem 1rem; background: rgba(87,65,77,0.05); border: 1.5px solid rgba(87,65,77,0.15); border-radius: 30px; font-size: 0.83rem; color: var(--text); cursor: pointer; transition: all 0.2s; font-family: 'Trebuchet MS', sans-serif; }
   .choice-btn:hover { border-color: var(--accent); background: rgba(202,110,148,0.08); }
-  .choice-btn.selected {
-    background: rgba(202,110,148,0.15);
-    border-color: var(--accent); color: var(--text); font-weight: 600;
-  }
-  .choice-btn.selected-gold {
-    background: rgba(153,124,66,0.15);
-    border-color: var(--highlight); color: var(--text); font-weight: 600;
-  }
-
-  textarea {
-    width: 100%;
-    background: rgba(87,65,77,0.055);
-    border: 1.5px solid rgba(87,65,77,0.17); border-radius: 11px;
-    padding: 1rem 1.2rem;
-    font-family: 'Trebuchet MS', sans-serif; font-size: 0.9rem;
-    color: var(--text); resize: vertical; min-height: 100px;
-    transition: border-color 0.25s, box-shadow 0.25s; outline: none; line-height: 1.65;
-  }
+  .choice-btn.selected { background: rgba(202,110,148,0.15); border-color: var(--accent); font-weight: 600; }
+  textarea { width: 100%; background: rgba(87,65,77,0.055); border: 1.5px solid rgba(87,65,77,0.17); border-radius: 11px; padding: 1rem 1.2rem; font-family: 'Trebuchet MS', sans-serif; font-size: 0.9rem; color: var(--text); resize: vertical; min-height: 100px; transition: border-color 0.25s, box-shadow 0.25s; outline: none; line-height: 1.65; }
   textarea::placeholder { color: rgba(87,65,77,0.38); }
   textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(202,110,148,0.13); }
-
-  /* BUTTONS */
-  .btn-primary {
-    display: block; width: 100%; padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--highlight), #b8944f);
-    color: #fff; font-family: 'Trebuchet MS', sans-serif;
-    font-size: 0.96rem; font-weight: 700; letter-spacing: 0.04em;
-    border: none; border-radius: 11px; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-    margin-top: 1.4rem; box-shadow: 0 4px 18px rgba(153,124,66,0.26);
-  }
-  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(153,124,66,0.36); }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-
-  .results-actions {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 1.8rem; gap: 1rem; flex-wrap: wrap;
-  }
-  .btn-back {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.6rem 1.3rem; background: transparent;
-    border: 1.5px solid rgba(87,65,77,0.35); color: var(--text);
-    border-radius: 9px; font-size: 0.85rem; cursor: pointer;
-    transition: all 0.2s; opacity: 0.65;
-  }
-  .btn-back:hover { opacity: 1; background: rgba(87,65,77,0.06); }
-  .btn-pdf {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.6rem 1.3rem;
-    background: linear-gradient(135deg, var(--accent), #b85580);
-    color: #fff; border: none; border-radius: 9px;
-    font-size: 0.85rem; font-weight: 700; cursor: pointer;
-    transition: all 0.2s; box-shadow: 0 3px 12px rgba(202,110,148,0.3);
-  }
-  .btn-pdf:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(202,110,148,0.4); }
-
-  /* LOADING */
+  .btn-primary { display: block; width: 100%; padding: 1rem 2rem; background: linear-gradient(135deg, var(--highlight), #b8944f); color: #fff; font-family: 'Trebuchet MS', sans-serif; font-size: 0.96rem; font-weight: 700; border: none; border-radius: 11px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 1.4rem; box-shadow: 0 4px 18px rgba(153,124,66,0.26); }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .results-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.8rem; gap: 1rem; flex-wrap: wrap; }
+  .btn-back { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.3rem; background: transparent; border: 1.5px solid rgba(87,65,77,0.35); color: var(--text); border-radius: 9px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; opacity: 0.65; }
+  .btn-back:hover { opacity: 1; }
+  .btn-pdf { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.3rem; background: linear-gradient(135deg, var(--accent), #b85580); color: #fff; border: none; border-radius: 9px; font-size: 0.85rem; font-weight: 700; cursor: pointer; box-shadow: 0 3px 12px rgba(202,110,148,0.3); }
   .loading-state { text-align: center; padding: 3.5rem 1rem; display: none; }
   .loading-state.visible { display: block; }
-  .spinner {
-    width: 46px; height: 46px;
-    border: 3px solid var(--main); border-top-color: var(--accent);
-    border-radius: 50%; animation: spin 0.85s linear infinite; margin: 0 auto 1.3rem;
-  }
+  .spinner { width: 46px; height: 46px; border: 3px solid var(--main); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.85s linear infinite; margin: 0 auto 1.3rem; }
   .loading-text { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text); opacity: 0.82; }
   .loading-sub { font-size: 0.8rem; color: var(--text); opacity: 0.48; margin-top: 0.45rem; }
-
-  /* ERROR */
-  .error-box {
-    background: rgba(202,110,148,0.09); border: 1px solid rgba(202,110,148,0.3);
-    border-radius: 11px; padding: 1rem 1.3rem; color: var(--text);
-    font-size: 0.87rem; display: none; margin-top: 1rem; line-height: 1.55;
-  }
+  .loading-progress { width: 100%; max-width: 300px; margin: 1.2rem auto 0; background: rgba(87,65,77,0.1); border-radius: 10px; height: 4px; overflow: hidden; }
+  .loading-progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--highlight)); border-radius: 10px; transition: width 1.5s ease; width: 0%; }
+  .error-box { background: rgba(202,110,148,0.09); border: 1px solid rgba(202,110,148,0.3); border-radius: 11px; padding: 1rem 1.3rem; color: var(--text); font-size: 0.87rem; display: none; margin-top: 1rem; line-height: 1.55; }
   .error-box.visible { display: block; }
-
-  /* RESULTS */
   .results-section { display: none; }
   .results-section.visible { display: block; }
   .results-header { text-align: center; margin-bottom: 2rem; }
   .results-header h2 { font-family: 'Instrument Serif', serif; font-size: clamp(1.6rem,4vw,2.2rem); color: var(--text); }
   .results-header p { font-size: 0.87rem; color: var(--text); opacity: 0.6; margin-top: 0.5rem; }
-
-  /* Intro box */
-  .intro-box {
-    background: linear-gradient(135deg, rgba(202,110,148,0.11), rgba(153,124,66,0.11));
-    border: 1px solid rgba(202,110,148,0.2); border-radius: 18px;
-    padding: 2rem; text-align: center; margin-bottom: 2rem;
-    opacity: 0; animation: fadeUp 0.6s ease forwards 0.05s;
-  }
+  .intro-box { background: linear-gradient(135deg, rgba(202,110,148,0.11), rgba(153,124,66,0.11)); border: 1px solid rgba(202,110,148,0.2); border-radius: 18px; padding: 2rem; text-align: center; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.05s; }
   .sarina-inner { font-family: 'Sarina', cursive; color: var(--accent); font-size: 1rem; display: block; margin-bottom: 0.7rem; }
   .intro-title { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: var(--text); margin-bottom: 0.6rem; }
   .intro-text { font-size: 0.9rem; color: var(--text); opacity: 0.82; line-height: 1.7; }
-
-  /* Color palette display */
-  .palette-box {
-    background: rgba(204,216,198,0.3); border: 1px solid rgba(204,216,198,0.7);
-    border-radius: 14px; padding: 1.4rem 1.6rem; margin-bottom: 1.5rem;
-    opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s;
-  }
+  .palette-box { background: rgba(204,216,198,0.3); border: 1px solid rgba(204,216,198,0.7); border-radius: 14px; padding: 1.4rem 1.6rem; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s; }
   .palette-title { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 0.8rem; }
   .palette-colors { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-  .color-chip {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 2px solid rgba(87,65,77,0.1);
-    box-shadow: 0 2px 8px rgba(87,65,77,0.15);
-  }
+  .color-chip { width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(87,65,77,0.1); }
   .palette-desc { font-size: 0.84rem; color: var(--text); opacity: 0.75; line-height: 1.6; }
-
-  /* Wardrobe items */
-  .section-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.2rem; color: var(--text);
-    margin: 1.8rem 0 1rem; padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(87,65,77,0.1);
-  }
-
-  .item-card {
-    border-radius: 14px; padding: 1.4rem 1.6rem; margin-bottom: 1rem;
-    opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s ease forwards;
-    position: relative; overflow: hidden;
-    border: 1px solid rgba(87,65,77,0.1);
-  }
-  .item-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 4px; height: 100%; border-radius: 4px 0 0 4px;
-  }
-  .item-basis { background: rgba(204,216,198,0.4); }
-  .item-basis::before { background: #a8c0a0; }
-  .item-key { background: rgba(153,124,66,0.08); }
-  .item-key::before { background: var(--highlight); }
-  .item-accent-card { background: rgba(202,110,148,0.08); }
-  .item-accent-card::before { background: var(--accent); }
-  .item-first { background: rgba(241,236,236,0.9); }
-  .item-first::before { background: var(--text); }
-
-  .item-number {
-    font-family: 'Sarina', cursive; font-size: 0.8rem;
-    color: var(--highlight); display: block; margin-bottom: 0.3rem;
-  }
+  .section-title { font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: var(--text); margin: 1.8rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(87,65,77,0.1); }
+  .item-card { border-radius: 14px; padding: 1.4rem 1.6rem; margin-bottom: 1rem; opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s ease forwards; position: relative; overflow: hidden; border: 1px solid rgba(87,65,77,0.1); }
+  .item-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 4px 0 0 4px; }
+  .item-basis { background: rgba(204,216,198,0.4); } .item-basis::before { background: #a8c0a0; }
+  .item-key { background: rgba(153,124,66,0.08); } .item-key::before { background: var(--highlight); }
+  .item-accent-card { background: rgba(202,110,148,0.08); } .item-accent-card::before { background: var(--accent); }
+  .item-first { background: rgba(241,236,236,0.9); } .item-first::before { background: var(--text); }
+  .item-number { font-family: 'Sarina', cursive; font-size: 0.8rem; color: var(--highlight); display: block; margin-bottom: 0.3rem; }
   .item-name { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 0.4rem; }
   .item-desc { font-size: 0.87rem; color: var(--text); opacity: 0.82; line-height: 1.65; }
-  .item-tip {
-    margin-top: 0.7rem; font-size: 0.8rem;
-    color: var(--highlight); font-style: italic; opacity: 0.9;
-  }
-
-  /* CTA box */
-  .cta-box {
-    background: linear-gradient(135deg, rgba(153,124,66,0.12), rgba(202,110,148,0.12));
-    border: 1px solid rgba(153,124,66,0.25); border-radius: 18px;
-    padding: 2rem; text-align: center; margin-top: 2.5rem;
-    opacity: 0; animation: fadeUp 0.6s ease forwards;
-  }
-  .cta-box .sarina-inner { margin-bottom: 0.5rem; }
+  .item-tip { margin-top: 0.7rem; font-size: 0.8rem; color: var(--highlight); font-style: italic; }
+  .cta-box { background: linear-gradient(135deg, rgba(153,124,66,0.12), rgba(202,110,148,0.12)); border: 1px solid rgba(153,124,66,0.25); border-radius: 18px; padding: 2rem; text-align: center; margin-top: 2.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards; }
   .cta-title { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 0.7rem; }
   .cta-text { font-size: 0.88rem; color: var(--text); opacity: 0.8; line-height: 1.7; margin-bottom: 1.2rem; }
-  .cta-link {
-    display: inline-block; padding: 0.8rem 2rem;
-    background: linear-gradient(135deg, var(--highlight), #b8944f);
-    color: #fff; text-decoration: none; border-radius: 10px;
-    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em;
-    box-shadow: 0 4px 16px rgba(153,124,66,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .cta-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(153,124,66,0.4); }
-
-  .step { display: none; }
-  .step.active { display: block; }
-
+  .cta-link { display: inline-block; padding: 0.8rem 2rem; background: linear-gradient(135deg, var(--highlight), #b8944f); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 0.9rem; }
+  .step { display: none; } .step.active { display: block; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  @media print {
-    body { background: #fff; padding: 0; }
-    body::before, body::after { display: none; }
-    .results-actions, .cta-box { display: none; }
-    .item-card, .intro-box, .palette-box { opacity: 1 !important; transform: none !important; animation: none !important; break-inside: avoid; }
-    .results-section { display: block !important; }
-    .header, .step-indicator, .progress-wrap, .step, .loading-state { display: none !important; }
-  }
-
-  @media (max-width: 520px) {
-    .input-section { padding: 1.6rem 1.2rem; }
-    h1 { font-size: 1.7rem; }
-    .choice-btn { font-size: 0.78rem; padding: 0.45rem 0.8rem; }
-  }
+  @media print { body { background: #fff; padding: 0; } .results-actions, .cta-box { display: none; } .item-card, .intro-box, .palette-box { opacity: 1 !important; transform: none !important; animation: none !important; break-inside: avoid; } .results-section { display: block !important; } .header, .step-indicator, .progress-wrap, .step, .loading-state { display: none !important; } }
 </style>
 </head>
 <body>
 <div class="container">
-
-  <!-- HEADER -->
   <div class="header">
-    <span class="brand">La Maison Vivante · Stil-Atelier</span>
-    <h1>Deine persönliche<br><em>Capsule Wardrobe</em></h1>
-    <p class="subtitle">Wenige Stücke. Viele Kombinationen.<br>Dein unverwechselbarer Stil – ganz auf dich zugeschnitten.</p>
+    <span class="brand">La Maison Vivante - Stil-Atelier</span>
+    <h1>Deine persoenliche<br><em>Capsule Wardrobe</em></h1>
+    <p class="subtitle">Wenige Stuecke. Viele Kombinationen.<br>Dein unverwechselbarer Stil - ganz auf dich zugeschnitten.</p>
     <div class="divider"></div>
   </div>
-
-  <!-- STEP DOTS -->
   <div class="step-indicator" id="stepDots">
     <div class="step-dot active" id="dot0"></div>
     <div class="step-dot" id="dot1"></div>
     <div class="step-dot" id="dot2"></div>
   </div>
-  <div class="progress-wrap">
-    <div class="progress-bar" id="progressBar" style="width:33%"></div>
-  </div>
-
-  <!-- STEP 1: Alltag & Stil -->
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:33%"></div></div>
   <div class="step active" id="step1">
     <div class="input-section">
       <div class="section-label">Dein Leben, dein Alltag</div>
-      <div class="section-hint">Damit ich weiß, welche Stücke wirklich zu dir passen – nicht zu irgendeiner Frau.</div>
-
+      <div class="section-hint">Damit ich weiss, welche Stuecke wirklich zu dir passen.</div>
       <div class="choice-group">
         <span class="choice-label">Wie sieht dein typischer Alltag aus?</span>
-        <div class="choice-hint">Wähle alles was zutrifft.</div>
+        <div class="choice-hint">Waehle alles was zutrifft.</div>
         <div class="choice-options" id="alltag">
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Viel zuhause</button>
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Büro / Meetings</button>
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Viel unterwegs</button>
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Kreativ / selbständig</button>
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Natur & Outdoor</button>
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Stadtleben</button>
-          <button class="choice-btn" onclick="toggle(this, 'alltag')">Viel Reisen</button>
+          <button class="choice-btn" onclick="toggle(this)">Viel zuhause</button>
+          <button class="choice-btn" onclick="toggle(this)">Buero / Meetings</button>
+          <button class="choice-btn" onclick="toggle(this)">Viel unterwegs</button>
+          <button class="choice-btn" onclick="toggle(this)">Kreativ / selbstaendig</button>
+          <button class="choice-btn" onclick="toggle(this)">Natur und Outdoor</button>
+          <button class="choice-btn" onclick="toggle(this)">Stadtleben</button>
+          <button class="choice-btn" onclick="toggle(this)">Viel Reisen</button>
         </div>
       </div>
-
       <div class="choice-group">
         <span class="choice-label">Welcher Stil-Satz beschreibt dich am ehesten?</span>
-        <div class="choice-hint">Nur eine Antwort – die erste Intuition zählt.</div>
+        <div class="choice-hint">Nur eine Antwort - die erste Intuition zaehlt.</div>
         <div class="choice-options" id="stiltyp">
-          <button class="choice-btn" onclick="toggleSingle(this, 'stiltyp')">Klassisch & zeitlos</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'stiltyp')">Natürlich & lässig</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'stiltyp')">Feminin & weich</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'stiltyp')">Minimalistisch & klar</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'stiltyp')">Boho & verspielt</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'stiltyp')">Elegant & strukturiert</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Klassisch und zeitlos</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Natuerlich und laessig</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Feminin und weich</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Minimalistisch und klar</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Boho und verspielt</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Elegant und strukturiert</button>
         </div>
       </div>
-
-      <button class="btn-primary" onclick="goToStep2()">Weiter →</button>
+      <button class="btn-primary" onclick="goToStep2()">Weiter</button>
     </div>
     <div class="error-box" id="err1"></div>
   </div>
-
-  <!-- STEP 2: Farben & Kleiderschrank -->
   <div class="step" id="step2">
     <div class="input-section">
-      <div class="section-label">Farben & dein Kleiderschrank</div>
-      <div class="section-hint">Jetzt wird es persönlich.</div>
-
+      <div class="section-label">Farben und dein Kleiderschrank</div>
+      <div class="section-hint">Jetzt wird es persoenlich.</div>
       <div class="choice-group">
-        <span class="choice-label">Welche Farbtöne trägst du am liebsten?</span>
-        <div class="choice-hint">Wähle alles was dich anzieht.</div>
+        <span class="choice-label">Welche Farben traegst du am liebsten?</span>
+        <div class="choice-hint">Waehle alles was dich anzieht.</div>
         <div class="choice-options" id="farben">
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Weiß & Creme</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Beige & Sand</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Camel & Cognac</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Schwarz & Grau</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Navy & Dunkelblau</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Terrakotta & Rost</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Grün & Olive</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Rosa & Mauve</button>
-          <button class="choice-btn" onclick="toggle(this, 'farben')">Erdtöne allgemein</button>
+          <button class="choice-btn" onclick="toggle(this)">Weiss und Creme</button>
+          <button class="choice-btn" onclick="toggle(this)">Beige und Sand</button>
+          <button class="choice-btn" onclick="toggle(this)">Camel und Cognac</button>
+          <button class="choice-btn" onclick="toggle(this)">Schwarz und Grau</button>
+          <button class="choice-btn" onclick="toggle(this)">Navy und Dunkelblau</button>
+          <button class="choice-btn" onclick="toggle(this)">Terrakotta und Rost</button>
+          <button class="choice-btn" onclick="toggle(this)">Gruen und Olive</button>
+          <button class="choice-btn" onclick="toggle(this)">Rosa und Mauve</button>
+          <button class="choice-btn" onclick="toggle(this)">Erdtoene allgemein</button>
         </div>
       </div>
-
       <div class="choice-group">
-        <span class="choice-label">Was nervt dich gerade an deinem Kleiderschrank?</span>
-        <div class="choice-hint">Ehrlich – das hilft mir am meisten.</div>
+        <span class="choice-label">Was nervt dich an deinem Kleiderschrank?</span>
+        <div class="choice-hint">Ehrlich - das hilft mir am meisten.</div>
         <div class="choice-options" id="problem">
-          <button class="choice-btn" onclick="toggle(this, 'problem')">Zu viel, aber nichts passt zusammen</button>
-          <button class="choice-btn" onclick="toggle(this, 'problem')">Alles wirkt irgendwie gleich</button>
-          <button class="choice-btn" onclick="toggle(this, 'problem')">Nichts fühlt sich wirklich nach mir an</button>
-          <button class="choice-btn" onclick="toggle(this, 'problem')">Zu viele Impulskäufe</button>
-          <button class="choice-btn" onclick="toggle(this, 'problem')">Keine Ahnung wo anfangen</button>
-          <button class="choice-btn" onclick="toggle(this, 'problem')">Stücke passen nicht zum Alltag</button>
+          <button class="choice-btn" onclick="toggle(this)">Zu viel, aber nichts passt zusammen</button>
+          <button class="choice-btn" onclick="toggle(this)">Alles wirkt irgendwie gleich</button>
+          <button class="choice-btn" onclick="toggle(this)">Nichts fuehlt sich nach mir an</button>
+          <button class="choice-btn" onclick="toggle(this)">Zu viele Impulskauefe</button>
+          <button class="choice-btn" onclick="toggle(this)">Keine Ahnung wo anfangen</button>
+          <button class="choice-btn" onclick="toggle(this)">Stuecke passen nicht zum Alltag</button>
         </div>
       </div>
-
       <div class="choice-group">
-        <span class="choice-label">Was möchtest du beim nächsten Kauf investieren?</span>
-        <div class="choice-hint">Kein Urteil – nur damit ich passende Empfehlungen gebe.</div>
+        <span class="choice-label">Was moechtest du beim naechsten Kauf investieren?</span>
+        <div class="choice-hint">Kein Urteil - nur damit ich passende Empfehlungen gebe.</div>
         <div class="choice-options" id="budget">
-          <button class="choice-btn" onclick="toggleSingle(this, 'budget')">Bewusst & günstig (bis 50€ pro Stück)</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'budget')">Mittel (50–150€ pro Stück)</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'budget')">Qualität first (150€+)</button>
-          <button class="choice-btn" onclick="toggleSingle(this, 'budget')">Kommt auf das Stück an</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'budget')">Bewusst und guenstig bis 50 Euro</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'budget')">Mittel 50 bis 150 Euro</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'budget')">Qualitaet first 150 Euro plus</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'budget')">Kommt auf das Stueck an</button>
         </div>
       </div>
-
-      <button class="btn-primary" onclick="goToStep3()">Weiter →</button>
+      <button class="btn-primary" onclick="goToStep3()">Weiter</button>
     </div>
     <div class="error-box" id="err2"></div>
   </div>
-
-  <!-- STEP 3: Freie Antwort -->
   <div class="step" id="step3">
     <div class="input-section">
       <div class="section-label">Eine letzte Frage</div>
-      <div class="section-hint">Die wichtigste – weil sie nur du beantworten kannst.</div>
-
+      <div class="section-hint">Die wichtigste - weil sie nur du beantworten kannst.</div>
       <div class="choice-group">
-        <span class="choice-label">Wie möchtest du dich in deinen Kleidern fühlen?</span>
-        <div class="choice-hint">Schreib einfach drauf los – ein Satz reicht, ein Absatz ist auch gut.</div>
-        <textarea id="gefuehl" placeholder="Ich möchte mich morgens anziehen und das Gefühl haben, dass..." rows="5" maxlength="600"></textarea>
+        <span class="choice-label">Wie moechtest du dich in deinen Kleidern fuehlen?</span>
+        <div class="choice-hint">Schreib einfach drauf los - ein Satz reicht.</div>
+        <textarea id="gefuehl" placeholder="Ich moechte mich morgens anziehen und das Gefuehl haben, dass..." rows="4" maxlength="400"></textarea>
       </div>
-
-      <button class="btn-primary" onclick="analyse()">Meine Capsule Wardrobe erstellen ✦</button>
+      <button class="btn-primary" onclick="analyse()">Meine Capsule Wardrobe erstellen</button>
     </div>
     <div class="error-box" id="err3"></div>
   </div>
-
-  <!-- LOADING -->
   <div class="loading-state" id="loadingState">
     <div class="spinner"></div>
-    <div class="loading-text" id="loadingText">Deine Capsule Wardrobe wird zusammengestellt...</div>
-    <div class="loading-sub" id="loadingSub">Das dauert nur einen Moment.</div>
+    <div class="loading-text" id="loadingText">Deine Farbpalette wird zusammengestellt...</div>
+    <div class="loading-sub" id="loadingSub">Das dauert einen Moment.</div>
+    <div class="loading-progress"><div class="loading-progress-bar" id="loadingBar"></div></div>
   </div>
-
-  <!-- RESULTS -->
   <div class="results-section" id="results">
     <div class="results-actions">
-      <button class="btn-back" onclick="resetAll()">← Zurück</button>
-      <button class="btn-pdf" onclick="window.print()">↓ Als PDF speichern</button>
+      <button class="btn-back" onclick="resetAll()">Zurueck</button>
+      <button class="btn-pdf" onclick="window.print()">Als PDF speichern</button>
     </div>
     <div class="results-header">
-      <h2>Deine persönliche<br><em style="font-style:italic;color:var(--highlight)">Capsule Wardrobe</em></h2>
-      <p>Kuratiert für dich – von La Maison Vivante</p>
+      <h2>Deine persoenliche<br><em style="font-style:italic;color:var(--highlight)">Capsule Wardrobe</em></h2>
+      <p>Kuratiert fuer dich - von La Maison Vivante</p>
     </div>
     <div id="introBox"></div>
     <div id="paletteBox"></div>
     <div id="itemsContainer"></div>
     <div id="ctaBox"></div>
   </div>
-
 </div>
-
 <script>
-  // Multi-select toggle
-  function toggle(btn, group) {
-    btn.classList.toggle('selected');
-  }
-  // Single-select toggle
-  function toggleSingle(btn, group) {
-    document.querySelectorAll(`#${group} .choice-btn`).forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-  }
-
-  function getSelected(groupId) {
-    return Array.from(document.querySelectorAll(`#${groupId} .choice-btn.selected`))
-      .map(b => b.textContent.trim());
-  }
-
-  function updateDots(step) {
-    for (let i = 0; i < 3; i++) {
-      const d = document.getElementById('dot' + i);
-      d.className = 'step-dot' + (i < step - 1 ? ' done' : i === step - 1 ? ' active' : '');
-    }
-    document.getElementById('progressBar').style.width = [33, 66, 100][step - 1] + '%';
-  }
-
-  function showErr(id, msg) {
-    const b = document.getElementById(id);
-    b.textContent = msg; b.classList.add('visible');
-  }
-  function hideErr(id) { document.getElementById(id).classList.remove('visible'); }
-
-  function goToStep2() {
-    const alltag = getSelected('alltag');
-    const stiltyp = getSelected('stiltyp');
-    if (alltag.length === 0 || stiltyp.length === 0) {
-      showErr('err1', 'Bitte wähle mindestens eine Option bei beiden Fragen aus.');
-      return;
-    }
-    hideErr('err1');
-    document.getElementById('step1').classList.remove('active');
-    document.getElementById('step2').classList.add('active');
-    updateDots(2);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function goToStep3() {
-    const farben = getSelected('farben');
-    if (farben.length === 0) {
-      showErr('err2', 'Bitte wähle mindestens eine Farbe aus.');
-      return;
-    }
-    hideErr('err2');
-    document.getElementById('step2').classList.remove('active');
+function toggle(btn){btn.classList.toggle('selected');}
+function toggleSingle(btn,group){document.querySelectorAll('#'+group+' .choice-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
+function getSelected(id){return Array.from(document.querySelectorAll('#'+id+' .choice-btn.selected')).map(b=>b.textContent.trim());}
+function updateDots(step){for(var i=0;i<3;i++){var d=document.getElementById('dot'+i);d.className='step-dot'+(i<step-1?' done':i===step-1?' active':'');}document.getElementById('progressBar').style.width=[33,66,100][step-1]+'%';}
+function showErr(id,msg){var b=document.getElementById(id);b.textContent=msg;b.classList.add('visible');}
+function hideErr(id){document.getElementById(id).classList.remove('visible');}
+function setBar(pct){document.getElementById('loadingBar').style.width=pct+'%';}
+function goToStep2(){if(!getSelected('alltag').length||!getSelected('stiltyp').length){showErr('err1','Bitte waehle mindestens eine Option bei beiden Fragen.');return;}hideErr('err1');document.getElementById('step1').classList.remove('active');document.getElementById('step2').classList.add('active');updateDots(2);window.scrollTo({top:0,behavior:'smooth'});}
+function goToStep3(){if(!getSelected('farben').length){showErr('err2','Bitte waehle mindestens eine Farbe.');return;}hideErr('err2');document.getElementById('step2').classList.remove('active');document.getElementById('step3').classList.add('active');updateDots(3);window.scrollTo({top:0,behavior:'smooth'});}
+function resetAll(){['step1','step2','step3'].forEach(function(id){document.getElementById(id).classList.remove('active');});document.getElementById('step1').classList.add('active');document.getElementById('results').classList.remove('visible');document.getElementById('loadingState').classList.remove('visible');document.getElementById('stepDots').style.display='flex';document.querySelector('.progress-wrap').style.display='block';hideErr('err1');hideErr('err2');hideErr('err3');updateDots(1);document.querySelectorAll('.choice-btn').forEach(function(b){b.classList.remove('selected');});document.getElementById('gefuehl').value='';window.scrollTo({top:0,behavior:'smooth'});}
+async function apiCall(body){var res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok){var err=await res.json().catch(function(){return{};});throw new Error(err&&err.error?err.error:'Fehler '+res.status);}return res.json();}
+async function analyse(){
+  var gefuehl=document.getElementById('gefuehl').value.trim();
+  if(gefuehl.length<5){showErr('err3','Bitte schreib kurz wie du dich fuehlen moechtest.');return;}
+  hideErr('err3');
+  var alltag=getSelected('alltag');
+  var stiltyp=getSelected('stiltyp');
+  var farben=getSelected('farben');
+  var problem=getSelected('problem');
+  var budget=getSelected('budget');
+  var userInfo='Alltag: '+alltag.join(', ')+'\nStiltyp: '+stiltyp.join(', ')+'\nFarben: '+farben.join(', ')+'\nProblem: '+(problem.length?problem.join(', '):'keine Angabe')+'\nBudget: '+(budget.length?budget.join(', '):'keine Angabe')+'\nGefuehl: '+gefuehl;
+  document.getElementById('step3').classList.remove('active');
+  document.getElementById('stepDots').style.display='none';
+  document.querySelector('.progress-wrap').style.display='none';
+  document.getElementById('loadingState').classList.add('visible');
+  setBar(5);
+  try {
+    document.getElementById('loadingText').textContent='Deine Farbpalette wird zusammengestellt...';
+    document.getElementById('loadingSub').textContent='Schritt 1 von 2';
+    setBar(15);
+    var p1='Stil-Beraterin La Maison Vivante. Antworte NUR als JSON ohne Markdown.\n\nProfil:\n'+userInfo+'\n\nErstelle: {"intro":{"titel":"poetischer Titel max 6 Woerter","text":"2 persoenliche Saetze"},"palette":{"titel":"Palettenname","farbcodes":["#hex1","#hex2","#hex3"],"beschreibung":"1 Satz"},"basis":[{"nummer":"01","name":"Name","beschreibung":"2 Saetze zu Schnitt und Material","tipp":"1 konkreter Tipp"},{"nummer":"02","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"03","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"}]}\n\nKonkret auf ihr Profil eingehen.';
+    var d1=await apiCall({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:p1}]});
+    var t1=d1.content.map(function(b){return b.text||'';}).join('');
+    var m1=t1.match(/\{[\s\S]*\}/);
+    if(!m1)throw new Error('Fehler in Teil 1. Bitte nochmal versuchen.');
+    var part1=JSON.parse(m1[0]);
+    setBar(55);
+    document.getElementById('loadingText').textContent='Deine Schluesselstuecke werden ausgewaehlt...';
+    document.getElementById('loadingSub').textContent='Schritt 2 von 2 - fast fertig.';
+    var p2='Stil-Beraterin La Maison Vivante. Antworte NUR als JSON ohne Markdown.\n\nProfil:\n'+userInfo+'\n\nErstelle: {"schluessel":[{"nummer":"04","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"05","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"06","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"}],"akzente":[{"nummer":"07","name":"Accessoire","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"08","name":"Accessoire","beschreibung":"2 Saetze","tipp":"1 Tipp"}],"ersterSchritt":{"titel":"Konkreter erster Schritt","text":"2 motivierende Saetze"}}\n\nKonkret auf ihr Profil eingehen.';
+    var d2=await apiCall({model:'claude-sonnet-4-6',max_tokens:900,messages:[{role:'user',content:p2}]});
+    var t2=d2.content.map(function(b){return b.text||'';}).join('');
+    var m2=t2.match(/\{[\s\S]*\}/);
+    if(!m2)throw new Error('Fehler in Teil 2. Bitte nochmal versuchen.');
+    var part2=JSON.parse(m2[0]);
+    setBar(95);
+    renderResults(Object.assign({},part1,part2));
+  } catch(err) {
+    document.getElementById('loadingState').classList.remove('visible');
     document.getElementById('step3').classList.add('active');
-    updateDots(3);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('stepDots').style.display='flex';
+    document.querySelector('.progress-wrap').style.display='block';
+    showErr('err3','Fehler: '+(err.message||'Bitte nochmal versuchen.'));
   }
-
-  function resetAll() {
-    ['step1','step2','step3'].forEach(id => document.getElementById(id).classList.remove('active'));
-    document.getElementById('step1').classList.add('active');
-    document.getElementById('results').classList.remove('visible');
-    document.getElementById('loadingState').classList.remove('visible');
-    document.getElementById('stepDots').style.display = 'flex';
-    document.querySelector('.progress-wrap').style.display = 'block';
-    hideErr('err1'); hideErr('err2'); hideErr('err3');
-    updateDots(1);
-    document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('gefuehl').value = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  async function callWithRetry(body, attempt = 1) {
-    if (attempt > 1) {
-      document.getElementById('loadingText').textContent = `Versuch ${attempt}/3 – gleich...`;
-      document.getElementById('loadingSub').textContent = 'Die KI ist gerade sehr beschäftigt, ich probiere es nochmal.';
-    }
-    const res = await fetch('/.netlify/functions/claude', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if ((res.status === 529 || res.status === 503) && attempt < 3) {
-      await new Promise(r => setTimeout(r, 2500));
-      return callWithRetry(body, attempt + 1);
-    }
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err?.error || `Fehler ${res.status}`);
-    }
-    return res.json();
-  }
-
-  async function analyse() {
-    const gefuehl = document.getElementById('gefuehl').value.trim();
-    if (gefuehl.length < 5) {
-      showErr('err3', 'Bitte schreib kurz, wie du dich in deinen Kleidern fühlen möchtest.');
-      return;
-    }
-    hideErr('err3');
-
-    const alltag = getSelected('alltag');
-    const stiltyp = getSelected('stiltyp');
-    const farben = getSelected('farben');
-    const problem = getSelected('problem');
-    const budget = getSelected('budget');
-
-    document.getElementById('step3').classList.remove('active');
-    document.getElementById('stepDots').style.display = 'none';
-    document.querySelector('.progress-wrap').style.display = 'none';
-    document.getElementById('loadingState').classList.add('visible');
-    document.getElementById('loadingText').textContent = 'Deine Capsule Wardrobe wird zusammengestellt...';
-    document.getElementById('loadingSub').textContent = 'Das dauert nur einen Moment.';
-
-    const userContent = [
-      `Alltag: ${alltag.join(', ')}`,
-      `Stiltyp: ${stiltyp.join(', ')}`,
-      `Lieblingsfarben: ${farben.join(', ')}`,
-      `Problem mit aktuellem Kleiderschrank: ${problem.length ? problem.join(', ') : 'keine Angabe'}`,
-      `Budget: ${budget.length ? budget.join(', ') : 'keine Angabe'}`,
-      `Gewünschtes Gefühl: ${gefuehl}`
-    ].join('\n');
-
-    const systemPrompt = `Du bist die Stil-Beraterin von La Maison Vivante – einem eleganten, mediterranen Lifestyle-Blog für Frauen in der Lebensmitte. Dein Ton ist warm, direkt, sinnlich und konkret. Keine Floskeln, keine allgemeinen Modesprüche.
-
-Erstelle eine persönliche Capsule Wardrobe basierend auf den Angaben der Frau.
-
-Antworte NUR als valides JSON-Objekt. Kein Markdown, keine Backticks, kein Text davor oder danach.
-
-Das JSON-Objekt hat folgende Felder:
-
-"intro": {
-  "titel": "persönlicher Titel für ihre Capsule (max 8 Wörter, poetisch)",
-  "text": "2-3 Sätze persönliche Einleitung, warm und direkt auf sie bezogen"
 }
-
-"palette": {
-  "titel": "Name ihrer Farbpalette (z.B. 'Stille Eleganz' oder 'Warme Erde')",
-  "farben": ["Farbname1", "Farbname2", "Farbname3"] (3-4 konkrete Farbnamen),
-  "farbcodes": ["#hexcode1", "#hexcode2", "#hexcode3"] (passende Hex-Codes),
-  "beschreibung": "1-2 Sätze warum diese Palette zu ihr passt"
+function renderResults(r){
+  document.getElementById('loadingState').classList.remove('visible');
+  document.getElementById('introBox').innerHTML='<div class="intro-box"><span class="sarina-inner">deine capsule</span><div class="intro-title">'+(r.intro&&r.intro.titel||'')+'</div><p class="intro-text">'+(r.intro&&r.intro.text||'')+'</p></div>';
+  var chips=(r.palette&&r.palette.farbcodes||[]).map(function(c){return'<div class="color-chip" style="background:'+c+'"></div>';}).join('');
+  document.getElementById('paletteBox').innerHTML='<div class="palette-box"><div class="palette-title">Deine Farbpalette: '+(r.palette&&r.palette.titel||'')+'</div><div class="palette-colors">'+chips+'</div><div class="palette-desc">'+(r.palette&&r.palette.beschreibung||'')+'</div></div>';
+  var container=document.getElementById('itemsContainer');container.innerHTML='';
+  function renderGroup(title,items,cls){if(!items||!items.length)return;var h=document.createElement('div');h.className='section-title';h.textContent=title;container.appendChild(h);items.forEach(function(item,i){var div=document.createElement('div');div.className='item-card '+cls;div.style.animationDelay=(0.1+i*0.1)+'s';div.innerHTML='<span class="item-number">'+(item.nummer||String(i+1).padStart(2,'0'))+'</span><div class="item-name">'+item.name+'</div><div class="item-desc">'+item.beschreibung+'</div>'+(item.tipp?'<div class="item-tip">'+item.tipp+'</div>':'');container.appendChild(div);});}
+  renderGroup('Die Basis - dein Fundament',r.basis,'item-basis');
+  renderGroup('Die Schluesselstuecke',r.schluessel,'item-key');
+  renderGroup('Die Akzente',r.akzente,'item-accent-card');
+  if(r.ersterSchritt){var div=document.createElement('div');div.className='item-card item-first';div.style.animationDelay='0.5s';div.style.marginTop='1.5rem';div.innerHTML='<span class="item-number">Erster Schritt</span><div class="item-name">'+r.ersterSchritt.titel+'</div><div class="item-desc">'+r.ersterSchritt.text+'</div>';container.appendChild(div);}
+  document.getElementById('ctaBox').innerHTML='<div class="cta-box" style="animation-delay:0.6s"><span class="sarina-inner">naechster schritt</span><div class="cta-title">Bereit, deinen Kleiderschrank wirklich zu veraendern?</div><p class="cta-text">Im Stil-Atelier von La Maison Vivante findest du das vollstaendige Workbook mit Schritt-fuer-Schritt-Anleitung und Einkaufsliste.</p><a href="https://la-maison-vivante.de" class="cta-link" target="_blank">Zum Stil-Atelier</a></div>';
+  document.getElementById('results').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-"basis": Array von 3-4 Objekten (Basisteile):
-  { "nummer": "01", "name": "Stückname", "beschreibung": "2-3 Sätze konkret warum dieses Stück, welcher Schnitt, welches Material", "tipp": "ein konkreter Kauf- oder Stylingtipp" }
-
-"schluessel": Array von 3-4 Objekten (Schlüsselstücke):
-  { "nummer": "05", "name": "Stückname", "beschreibung": "...", "tipp": "..." }
-
-"akzente": Array von 2-3 Objekten (Accessoires/Akzente):
-  { "nummer": "09", "name": "Stückname", "beschreibung": "...", "tipp": "..." }
-
-"ersterSchritt": {
-  "titel": "Ein konkreter erster Schritt (max 6 Wörter)",
-  "text": "2-3 Sätze – was sie heute noch tun kann, konkret und machbar"
-}
-
-Sei sehr spezifisch auf ihre Angaben – nicht generisch. Wenn sie 'feminin & weich' gewählt hat, schreib das in die Stücke rein. Wenn sie 'zu viele Impulskäufe' als Problem hat, adressiere das sanft.`;
-
-    try {
-      const data = await callWithRetry({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 3000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userContent }]
-      });
-
-      const rawText = data.content.map(b => b.text || '').join('');
-      const match = rawText.match(/\{[\s\S]*\}/);
-      if (!match) throw new Error('Die Antwort konnte nicht verarbeitet werden. Bitte versuche es nochmal.');
-
-      let result;
-      try { result = JSON.parse(match[0]); }
-      catch { throw new Error('Unerwartetes Antwortformat. Bitte versuche es erneut.'); }
-
-      renderResults(result);
-    } catch (err) {
-      document.getElementById('loadingState').classList.remove('visible');
-      document.getElementById('step3').classList.add('active');
-      document.getElementById('stepDots').style.display = 'flex';
-      document.querySelector('.progress-wrap').style.display = 'block';
-      showErr('err3', '⚠ ' + (err.message || 'Ein unbekannter Fehler. Bitte versuche es nochmal.'));
-    }
-  }
-
-  function renderResults(r) {
-    document.getElementById('loadingState').classList.remove('visible');
-
-    // Intro
-    document.getElementById('introBox').innerHTML = `
-      <div class="intro-box">
-        <span class="sarina-inner">✦ deine capsule ✦</span>
-        <div class="intro-title">${r.intro.titel}</div>
-        <p class="intro-text">${r.intro.text}</p>
-      </div>`;
-
-    // Palette
-    const chips = (r.palette.farbcodes || []).map(c =>
-      `<div class="color-chip" style="background:${c}" title="${c}"></div>`
-    ).join('');
-    document.getElementById('paletteBox').innerHTML = `
-      <div class="palette-box">
-        <div class="palette-title">✦ Deine Farbpalette: ${r.palette.titel}</div>
-        <div class="palette-colors">${chips}</div>
-        <div class="palette-desc">${r.palette.beschreibung}</div>
-      </div>`;
-
-    // Items
-    const container = document.getElementById('itemsContainer');
-    container.innerHTML = '';
-
-    function renderGroup(title, items, cls) {
-      if (!items || !items.length) return;
-      const h = document.createElement('div');
-      h.className = 'section-title';
-      h.textContent = title;
-      container.appendChild(h);
-      items.forEach((item, i) => {
-        const div = document.createElement('div');
-        div.className = `item-card ${cls}`;
-        div.style.animationDelay = (0.1 + i * 0.1) + 's';
-        div.innerHTML = `
-          <span class="item-number">${item.nummer || String(i+1).padStart(2,'0')}</span>
-          <div class="item-name">${item.name}</div>
-          <div class="item-desc">${item.beschreibung}</div>
-          ${item.tipp ? `<div class="item-tip">→ ${item.tipp}</div>` : ''}`;
-        container.appendChild(div);
-      });
-    }
-
-    renderGroup('Die Basis – dein Fundament', r.basis, 'item-basis');
-    renderGroup('Die Schlüsselstücke', r.schluessel, 'item-key');
-    renderGroup('Die Akzente', r.akzente, 'item-accent-card');
-
-    // Erster Schritt
-    if (r.ersterSchritt) {
-      const div = document.createElement('div');
-      div.className = 'item-card item-first';
-      div.style.animationDelay = '0.5s';
-      div.style.marginTop = '1.5rem';
-      div.innerHTML = `
-        <span class="item-number">✦</span>
-        <div class="item-name">${r.ersterSchritt.titel}</div>
-        <div class="item-desc">${r.ersterSchritt.text}</div>`;
-      container.appendChild(div);
-    }
-
-    // CTA
-    document.getElementById('ctaBox').innerHTML = `
-      <div class="cta-box" style="animation-delay: 0.6s">
-        <span class="sarina-inner">nächster schritt</span>
-        <div class="cta-title">Bereit, deinen Kleiderschrank wirklich zu verändern?</div>
-        <p class="cta-text">Im Stil-Atelier von La Maison Vivante findest du das vollständige Workbook – mit Schritt-für-Schritt-Anleitung, Einkaufsliste und allem, was du für deine persönliche Capsule brauchst.</p>
-        <a href="https://la-maison-vivante.de" class="cta-link" target="_blank">Zum Stil-Atelier →</a>
-      </div>`;
-
-    document.getElementById('results').classList.add('visible');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 </script>
 </body>
 </html>
