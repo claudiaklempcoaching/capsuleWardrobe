@@ -245,7 +245,7 @@ async function analyse(){
     document.getElementById('loadingSub').textContent='Schritt 1 von 2';
     setBar(15);
     var p1='Stil-Beraterin La Maison Vivante. Antworte NUR als JSON ohne Markdown.\n\nProfil:\n'+userInfo+'\n\nErstelle: {"intro":{"titel":"poetischer Titel max 6 Woerter","text":"2 persoenliche Saetze"},"palette":{"titel":"Palettenname","farbcodes":["#hex1","#hex2","#hex3"],"beschreibung":"1 Satz"},"basis":[{"nummer":"01","name":"Name","beschreibung":"2 Saetze zu Schnitt und Material","tipp":"1 konkreter Tipp"},{"nummer":"02","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"03","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"}]}\n\nKonkret auf ihr Profil eingehen.';
-    var d1=await apiCall({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:p1}]});
+    var d1=await apiCall({model:'claude-sonnet-4-6',max_tokens:1500,messages:[{role:'user',content:p1}]});
     var t1=d1.content.map(function(b){return b.text||'';}).join('');
     var m1=t1.match(/\{[\s\S]*\}/);
     if(!m1)throw new Error('Fehler in Teil 1. Bitte nochmal versuchen.');
@@ -254,7 +254,7 @@ async function analyse(){
     document.getElementById('loadingText').textContent='Deine Schluesselstuecke werden ausgewaehlt...';
     document.getElementById('loadingSub').textContent='Schritt 2 von 2 - fast fertig.';
     var p2='Stil-Beraterin La Maison Vivante. Antworte NUR als JSON ohne Markdown.\n\nProfil:\n'+userInfo+'\n\nErstelle: {"schluessel":[{"nummer":"04","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"05","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"06","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"}],"akzente":[{"nummer":"07","name":"Accessoire","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"08","name":"Accessoire","beschreibung":"2 Saetze","tipp":"1 Tipp"}],"ersterSchritt":{"titel":"Konkreter erster Schritt","text":"2 motivierende Saetze"}}\n\nKonkret auf ihr Profil eingehen.';
-    var d2=await apiCall({model:'claude-sonnet-4-6',max_tokens:900,messages:[{role:'user',content:p2}]});
+    var d2=await apiCall({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:p2}]});
     var t2=d2.content.map(function(b){return b.text||'';}).join('');
     var m2=t2.match(/\{[\s\S]*\}/);
     if(!m2)throw new Error('Fehler in Teil 2. Bitte nochmal versuchen.');
