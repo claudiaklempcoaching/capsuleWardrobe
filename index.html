@@ -130,14 +130,50 @@
           <button class="choice-btn" onclick="toggleSingle(this,'stiltyp')">Elegant und strukturiert</button>
         </div>
       </div>
+      <div class="choice-group">
+        <span class="choice-label">Was traegst du am liebsten?</span>
+        <div class="choice-hint">Nur eine Antwort.</div>
+        <div class="choice-options" id="silhouette">
+          <button class="choice-btn" onclick="toggleSingle(this,'silhouette')">Lieber Hosen</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'silhouette')">Lieber Roecke und Kleider</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'silhouette')">Beides gern</button>
+        </div>
+      </div>
+      <div class="choice-group">
+        <span class="choice-label">Fuer welche Jahreszeit baust du gerade?</span>
+        <div class="choice-hint">Nur eine Antwort - das bestimmt die Stoffe.</div>
+        <div class="choice-options" id="saison">
+          <button class="choice-btn" onclick="toggleSingle(this,'saison')">Fruehling und Sommer</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'saison')">Herbst und Winter</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'saison')">Ganzjaehrig</button>
+        </div>
+      </div>
       <button class="btn-primary" onclick="goToStep2()">Weiter</button>
     </div>
     <div class="error-box" id="err1"></div>
   </div>
   <div class="step" id="step2">
     <div class="input-section">
-      <div class="section-label">Farben und dein Kleiderschrank</div>
-      <div class="section-hint">Jetzt wird es persoenlich.</div>
+      <div class="section-label">Deine Farben und dein Hautton</div>
+      <div class="section-hint">Der Hautton entscheidet, welche Toene dich zum Leuchten bringen.</div>
+      <div class="choice-group">
+        <span class="choice-label">Schau dir bei Tageslicht die Adern an deinem Handgelenk an. Welche Farbe haben sie?</span>
+        <div class="choice-hint">Nur eine Antwort.</div>
+        <div class="choice-options" id="venen">
+          <button class="choice-btn" onclick="toggleSingle(this,'venen')">Blaeulich oder violett</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'venen')">Gruenlich</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'venen')">Kann ich nicht klar sagen</button>
+        </div>
+      </div>
+      <div class="choice-group">
+        <span class="choice-label">Welcher Schmuck steht dir nah am Gesicht besser?</span>
+        <div class="choice-hint">Nur eine Antwort - Silber oder Gold.</div>
+        <div class="choice-options" id="schmuck">
+          <button class="choice-btn" onclick="toggleSingle(this,'schmuck')">Silber steht mir besser</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'schmuck')">Gold steht mir besser</button>
+          <button class="choice-btn" onclick="toggleSingle(this,'schmuck')">Beides steht mir gleich gut</button>
+        </div>
+      </div>
       <div class="choice-group">
         <span class="choice-label">Welche Farben traegst du am liebsten?</span>
         <div class="choice-hint">Waehle alles was dich anzieht.</div>
@@ -150,6 +186,12 @@
           <button class="choice-btn" onclick="toggle(this)">Terrakotta und Rost</button>
           <button class="choice-btn" onclick="toggle(this)">Gruen und Olive</button>
           <button class="choice-btn" onclick="toggle(this)">Rosa und Mauve</button>
+          <button class="choice-btn" onclick="toggle(this)">Rot</button>
+          <button class="choice-btn" onclick="toggle(this)">Pink</button>
+          <button class="choice-btn" onclick="toggle(this)">Orange</button>
+          <button class="choice-btn" onclick="toggle(this)">Royalblau</button>
+          <button class="choice-btn" onclick="toggle(this)">Babyblau</button>
+          <button class="choice-btn" onclick="toggle(this)">Tuerkis</button>
           <button class="choice-btn" onclick="toggle(this)">Erdtoene allgemein</button>
         </div>
       </div>
@@ -221,8 +263,8 @@ function updateDots(step){for(var i=0;i<3;i++){var d=document.getElementById('do
 function showErr(id,msg){var b=document.getElementById(id);b.textContent=msg;b.classList.add('visible');}
 function hideErr(id){document.getElementById(id).classList.remove('visible');}
 function setBar(pct){document.getElementById('loadingBar').style.width=pct+'%';}
-function goToStep2(){if(!getSelected('alltag').length||!getSelected('stiltyp').length){showErr('err1','Bitte waehle mindestens eine Option bei beiden Fragen.');return;}hideErr('err1');document.getElementById('step1').classList.remove('active');document.getElementById('step2').classList.add('active');updateDots(2);window.scrollTo({top:0,behavior:'smooth'});}
-function goToStep3(){if(!getSelected('farben').length){showErr('err2','Bitte waehle mindestens eine Farbe.');return;}hideErr('err2');document.getElementById('step2').classList.remove('active');document.getElementById('step3').classList.add('active');updateDots(3);window.scrollTo({top:0,behavior:'smooth'});}
+function goToStep2(){if(!getSelected('alltag').length||!getSelected('stiltyp').length||!getSelected('silhouette').length||!getSelected('saison').length){showErr('err1','Bitte waehle bei Alltag, Stil, Silhouette und Jahreszeit jeweils eine Option.');return;}hideErr('err1');document.getElementById('step1').classList.remove('active');document.getElementById('step2').classList.add('active');updateDots(2);window.scrollTo({top:0,behavior:'smooth'});}
+function goToStep3(){if(!getSelected('venen').length||!getSelected('schmuck').length){showErr('err2','Bitte beantworte die zwei Fragen zum Hautton.');return;}if(!getSelected('farben').length){showErr('err2','Bitte waehle mindestens eine Farbe.');return;}hideErr('err2');document.getElementById('step2').classList.remove('active');document.getElementById('step3').classList.add('active');updateDots(3);window.scrollTo({top:0,behavior:'smooth'});}
 function resetAll(){['step1','step2','step3'].forEach(function(id){document.getElementById(id).classList.remove('active');});document.getElementById('step1').classList.add('active');document.getElementById('results').classList.remove('visible');document.getElementById('loadingState').classList.remove('visible');document.getElementById('stepDots').style.display='flex';document.querySelector('.progress-wrap').style.display='block';hideErr('err1');hideErr('err2');hideErr('err3');updateDots(1);document.querySelectorAll('.choice-btn').forEach(function(b){b.classList.remove('selected');});document.getElementById('gefuehl').value='';window.scrollTo({top:0,behavior:'smooth'});}
 async function apiCall(body){var res=await fetch('/.netlify/functions/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok){var err=await res.json().catch(function(){return{};});throw new Error(err&&err.error?err.error:'Fehler '+res.status);}return res.json();}
 async function analyse(){
@@ -231,10 +273,29 @@ async function analyse(){
   hideErr('err3');
   var alltag=getSelected('alltag');
   var stiltyp=getSelected('stiltyp');
+  var saison=getSelected('saison');
+  var silhouette=getSelected('silhouette')[0]||'';
+  var silRegel;
+  if(silhouette.indexOf('Beides')>-1)silRegel='Silhouette: sie mag Hosen und Roecke/Kleider gleichermassen. Mische beides ausgewogen.';
+  else if(silhouette.indexOf('Roecke')>-1||silhouette.indexOf('Kleider')>-1)silRegel='Silhouette: sie traegt am liebsten Roecke und Kleider. Baue die Capsule um Roecke und Kleider, empfiehl hoechstens eine Hose.';
+  else if(silhouette.indexOf('Hosen')>-1)silRegel='Silhouette: sie traegt am liebsten Hosen. Empfiehl Hosen in verschiedenen Schnitten, KEINE Roecke und KEINE Kleider.';
+  else silRegel='Silhouette: keine klare Angabe, mische Hosen und Roecke/Kleider.';
   var farben=getSelected('farben');
   var problem=getSelected('problem');
   var budget=getSelected('budget');
-  var userInfo='Alltag: '+alltag.join(', ')+'\nStiltyp: '+stiltyp.join(', ')+'\nFarben: '+farben.join(', ')+'\nProblem: '+(problem.length?problem.join(', '):'keine Angabe')+'\nBudget: '+(budget.length?budget.join(', '):'keine Angabe')+'\nGefuehl: '+gefuehl;
+  var venen=getSelected('venen')[0]||'';
+  var schmuck=getSelected('schmuck')[0]||'';
+  var k=0,w=0;
+  if(venen.indexOf('violett')>-1||venen.indexOf('Blae')>-1)k++;else if(venen.indexOf('Gruen')>-1)w++;
+  if(schmuck.indexOf('Silber')>-1)k++;else if(schmuck.indexOf('Gold')>-1)w++;
+  var typ=k>w?'kalt':(w>k?'warm':'neutral');
+  var huatRegel;
+  if(typ==='kalt')huatRegel='Hautton: kalt. Empfiehl nur kuehle, klare Farben wie Reinweiss, Marine, Grau, Beere, kuehles Pink, Smaragd, Eisblau, Kirschrot. KEIN Camel, kein Orange, kein warmes Beige, kein Senf, kein Cognac.';
+  else if(typ==='warm')huatRegel='Hautton: warm. Empfiehl nur warme Farben wie Creme, Camel, Cognac, Oliv, Terrakotta, Rost, Senf, Tomatenrot, warmes Orange. Kein Reinweiss, kein kuehles Pink, kein Eisblau.';
+  else huatRegel='Hautton: neutral. Empfiehl gedaempfte Farben zwischen warm und kuehl wie Taupe, Greige, Altrosa, gedaempftes Blau, Salbei, weiches Marine. Vermeide sehr grelle Toene.';
+  huatRegel+=' Die Lieblingsfarben zeigen die Richtung. Passt eine Lieblingsfarbe nicht zum Unterton, uebersetze sie in die passende Variante statt sie wegzulassen, zum Beispiel mag Camel aber ist kalt, dann Taupe oder kuehles Greige.';
+  var userInfo='Alltag: '+alltag.join(', ')+'\nStiltyp: '+stiltyp.join(', ')+'\nSilhouette-Vorliebe: '+silhouette+'\nSaison: '+saison.join(', ')+'\nHautton: '+typ+'\nFarben: '+farben.join(', ')+'\nProblem: '+(problem.length?problem.join(', '):'keine Angabe')+'\nBudget: '+(budget.length?budget.join(', '):'keine Angabe')+'\nGefuehl: '+gefuehl;
+  var materialRegeln='Material-Regeln, halte dich strikt daran:\n- Taschen und Schuhe immer aus Leder, Wildleder oder festem Material, niemals aus Leinen.\n- Strickteile und Uebergangsjacken aus Wolle, Kaschmir oder Baumwollmix.\n- Bei Saison Herbst und Winter warme Stoffe wie Wolle, Kaschmir, Cord, dichte Baumwolle. KEIN Leinen.\n- Bei Saison Fruehling und Sommer leichtere Stoffe, Leinen ist hier erlaubt, aber nicht fuer jedes Teil.\n- Bei Ganzjaehrig mische die Stoffe und setze auf Lagen.\n- Variiere die Materialien ueber die Stuecke hinweg, nicht alles aus demselben Stoff.';
   document.getElementById('step3').classList.remove('active');
   document.getElementById('stepDots').style.display='none';
   document.querySelector('.progress-wrap').style.display='none';
@@ -244,23 +305,25 @@ async function analyse(){
     document.getElementById('loadingText').textContent='Deine Farbpalette wird zusammengestellt...';
     document.getElementById('loadingSub').textContent='Schritt 1 von 2';
     setBar(15);
-    var p1='Stil-Beraterin La Maison Vivante. Antworte NUR als JSON ohne Markdown.\n\nProfil:\n'+userInfo+'\n\nErstelle: {"intro":{"titel":"poetischer Titel max 6 Woerter","text":"2 persoenliche Saetze"},"palette":{"titel":"Palettenname","farbcodes":["#hex1","#hex2","#hex3"],"beschreibung":"1 Satz"},"basis":[{"nummer":"01","name":"Name","beschreibung":"2 Saetze zu Schnitt und Material","tipp":"1 konkreter Tipp"},{"nummer":"02","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"03","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"}]}\n\nKonkret auf ihr Profil eingehen.';
-    var d1=await apiCall({model:'claude-sonnet-4-6',max_tokens:1500,messages:[{role:'user',content:p1}]});
+    var p1='Du bist Stil-Beraterin von La Maison Vivante. Antworte NUR als JSON, ohne Markdown, ohne Vortext.\n\nProfil:\n'+userInfo+'\n\n'+huatRegel+'\n\n'+silRegel+'\n\n'+materialRegeln+'\n\nWeitere Regeln:\n- Gehe konkret auf das Profil ein, keine Floskeln, kein "beste Version deiner selbst".\n- Die drei Basis-Teile sind drei VERSCHIEDENE Kategorien, zum Beispiel ein Oberteil, eine Hose und eine Lage. Keine zwei Hemden, keine zwei Hosen.\n\nErstelle: {"intro":{"titel":"poetischer Titel max 6 Woerter","text":"2 persoenliche Saetze"},"palette":{"titel":"Palettenname","farbcodes":["#hex1","#hex2","#hex3"],"beschreibung":"1 Satz"},"basis":[{"nummer":"01","name":"Name inkl. Material","beschreibung":"1 bis 2 kurze Saetze zu Schnitt und Material","tipp":"1 kurzer konkreter Tipp"},{"nummer":"02","name":"Name inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"},{"nummer":"03","name":"Name inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"}]}';
+    var d1=await apiCall({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:p1}]});
     var t1=d1.content.map(function(b){return b.text||'';}).join('');
     var m1=t1.match(/\{[\s\S]*\}/);
     if(!m1)throw new Error('Fehler in Teil 1. Bitte nochmal versuchen.');
     var part1=JSON.parse(m1[0]);
+    var basisNamen=(part1.basis||[]).map(function(b){return b.name;}).join('; ');
+    var paletteTitel=(part1.palette&&part1.palette.titel)||'';
     setBar(55);
     document.getElementById('loadingText').textContent='Deine Schluesselstuecke werden ausgewaehlt...';
     document.getElementById('loadingSub').textContent='Schritt 2 von 2 - fast fertig.';
-    var p2='Stil-Beraterin La Maison Vivante. Antworte NUR als JSON ohne Markdown.\n\nProfil:\n'+userInfo+'\n\nErstelle: {"schluessel":[{"nummer":"04","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"05","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"06","name":"Name","beschreibung":"2 Saetze","tipp":"1 Tipp"}],"akzente":[{"nummer":"07","name":"Accessoire","beschreibung":"2 Saetze","tipp":"1 Tipp"},{"nummer":"08","name":"Accessoire","beschreibung":"2 Saetze","tipp":"1 Tipp"}],"ersterSchritt":{"titel":"Konkreter erster Schritt","text":"2 motivierende Saetze"}}\n\nKonkret auf ihr Profil eingehen.';
-    var d2=await apiCall({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:p2}]});
+    var p2='Du bist Stil-Beraterin von La Maison Vivante. Antworte NUR als JSON, ohne Markdown, ohne Vortext.\n\nProfil:\n'+userInfo+'\n\nDiese Teile sind schon Teil der Capsule, wiederhole sie NICHT und waehle ANDERE Kategorien:\n'+basisNamen+'\nPalette: '+paletteTitel+'\n\n'+huatRegel+'\n\n'+silRegel+'\n\n'+materialRegeln+'\n\nWeitere Regeln:\n- Ergaenze mit anderen Teil-Arten als oben, zum Beispiel Jacke, Mantel, Strickteil, Schuhe, oder eine weitere Hose, ein Rock, ein Kleid, je nach Silhouette-Vorliebe oben. Keine Wiederholung einer schon vorhandenen Kategorie.\n- Gehe konkret auf das Profil ein, keine Floskeln.\n\nErstelle: {"schluessel":[{"nummer":"04","name":"Name inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"},{"nummer":"05","name":"Name inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"},{"nummer":"06","name":"Name inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"}],"akzente":[{"nummer":"07","name":"Accessoire inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"},{"nummer":"08","name":"Accessoire inkl. Material","beschreibung":"1 bis 2 kurze Saetze","tipp":"1 kurzer Tipp"}],"ersterSchritt":{"titel":"Konkreter erster Schritt","text":"2 motivierende Saetze"}}';
+    var d2=await apiCall({model:'claude-haiku-4-5-20251001',max_tokens:1100,messages:[{role:'user',content:p2}]});
     var t2=d2.content.map(function(b){return b.text||'';}).join('');
     var m2=t2.match(/\{[\s\S]*\}/);
     if(!m2)throw new Error('Fehler in Teil 2. Bitte nochmal versuchen.');
     var part2=JSON.parse(m2[0]);
     setBar(95);
-    renderResults(Object.assign({},part1,part2));
+    renderResults(Object.assign({hauttyp:typ},part1,part2));
   } catch(err) {
     document.getElementById('loadingState').classList.remove('visible');
     document.getElementById('step3').classList.add('active');
@@ -273,14 +336,15 @@ function renderResults(r){
   document.getElementById('loadingState').classList.remove('visible');
   document.getElementById('introBox').innerHTML='<div class="intro-box"><span class="sarina-inner">deine capsule</span><div class="intro-title">'+(r.intro&&r.intro.titel||'')+'</div><p class="intro-text">'+(r.intro&&r.intro.text||'')+'</p></div>';
   var chips=(r.palette&&r.palette.farbcodes||[]).map(function(c){return'<div class="color-chip" style="background:'+c+'"></div>';}).join('');
-  document.getElementById('paletteBox').innerHTML='<div class="palette-box"><div class="palette-title">Deine Farbpalette: '+(r.palette&&r.palette.titel||'')+'</div><div class="palette-colors">'+chips+'</div><div class="palette-desc">'+(r.palette&&r.palette.beschreibung||'')+'</div></div>';
+  var httxt=r.hauttyp?('<div class="palette-desc" style="margin-bottom:0.6rem">Dein Hautton: '+r.hauttyp.charAt(0).toUpperCase()+r.hauttyp.slice(1)+'</div>'):'';
+  document.getElementById('paletteBox').innerHTML='<div class="palette-box"><div class="palette-title">Deine Farbpalette: '+(r.palette&&r.palette.titel||'')+'</div>'+httxt+'<div class="palette-colors">'+chips+'</div><div class="palette-desc">'+(r.palette&&r.palette.beschreibung||'')+'</div></div>';
   var container=document.getElementById('itemsContainer');container.innerHTML='';
   function renderGroup(title,items,cls){if(!items||!items.length)return;var h=document.createElement('div');h.className='section-title';h.textContent=title;container.appendChild(h);items.forEach(function(item,i){var div=document.createElement('div');div.className='item-card '+cls;div.style.animationDelay=(0.1+i*0.1)+'s';div.innerHTML='<span class="item-number">'+(item.nummer||String(i+1).padStart(2,'0'))+'</span><div class="item-name">'+item.name+'</div><div class="item-desc">'+item.beschreibung+'</div>'+(item.tipp?'<div class="item-tip">'+item.tipp+'</div>':'');container.appendChild(div);});}
   renderGroup('Die Basis - dein Fundament',r.basis,'item-basis');
   renderGroup('Die Schluesselstuecke',r.schluessel,'item-key');
   renderGroup('Die Akzente',r.akzente,'item-accent-card');
   if(r.ersterSchritt){var div=document.createElement('div');div.className='item-card item-first';div.style.animationDelay='0.5s';div.style.marginTop='1.5rem';div.innerHTML='<span class="item-number">Erster Schritt</span><div class="item-name">'+r.ersterSchritt.titel+'</div><div class="item-desc">'+r.ersterSchritt.text+'</div>';container.appendChild(div);}
-  document.getElementById('ctaBox').innerHTML='<div class="cta-box" style="animation-delay:0.6s"><span class="sarina-inner">naechster schritt</span><div class="cta-title">Bereit, deinen Kleiderschrank wirklich zu veraendern?</div><p class="cta-text">Im Stil-Atelier von La Maison Vivante findest du das vollstaendige Workbook mit Schritt-fuer-Schritt-Anleitung und Einkaufsliste.</p><a href="https://la-maison-vivante.de" class="cta-link" target="_blank">Zum Stil-Atelier</a></div>';
+  document.getElementById('ctaBox').innerHTML='<div class="cta-box" style="animation-delay:0.6s"><span class="sarina-inner">und jetzt</span><div class="cta-title">Fang mit einem Stueck an</div><p class="cta-text">Du musst nicht alles auf einmal aendern. Nimm dir das erste Teil aus deiner Liste vor und merke, wie sich der Morgen damit anfuehlt. Der Rest folgt von selbst.</p><a href="https://la-maison-vivante.de" class="cta-link" target="_blank">Zur Maison</a></div>';
   document.getElementById('results').classList.add('visible');
   window.scrollTo({top:0,behavior:'smooth'});
 }
