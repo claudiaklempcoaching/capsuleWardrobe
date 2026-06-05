@@ -23,7 +23,7 @@ exports.handler = async function (event) {
   }
   try {
     const body = JSON.parse(event.body);
-    body.model = "claude-haiku-4-5-20251001";
+  
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 24000);
     const response = await fetch("https://api.anthropic.com/v1/messages", {
