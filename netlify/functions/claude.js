@@ -10,11 +10,9 @@ exports.handler = async function (event) {
       body: "",
     };
   }
-
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
-
   const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
   if (!ANTHROPIC_API_KEY) {
     return {
@@ -23,13 +21,11 @@ exports.handler = async function (event) {
       body: JSON.stringify({ error: "API-Key nicht konfiguriert. Bitte ANTHROPIC_API_KEY in Netlify setzen." }),
     };
   }
-
   try {
     const body = JSON.parse(event.body);
-
+    body.model = "claude-haiku-4-5-20251001";
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 24000);
-
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -40,11 +36,8 @@ exports.handler = async function (event) {
       body: JSON.stringify(body),
       signal: controller.signal,
     });
-
     clearTimeout(timeout);
-
     const data = await response.json();
-
     if (!response.ok) {
       return {
         statusCode: response.status,
@@ -52,7 +45,6 @@ exports.handler = async function (event) {
         body: JSON.stringify({ error: data?.error?.message || "API-Fehler" }),
       };
     }
-
     return {
       statusCode: 200,
       headers: {
