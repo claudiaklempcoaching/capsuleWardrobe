@@ -374,7 +374,33 @@ function renderPaletteFor(key){
 }
 
 async function apiCall(body){var r=await fetch("/.netlify/functions/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});if(!r.ok){var e=await r.json().catch(function(){return{};});throw new Error(e&&e.error?e.error:"Fehler "+r.status);}return r.json();}
-function parseJSON(data,teil){var t=data.content.map(function(b){return b.text||"";}).join("");var m=t.match(/\{[\s\S]*\}/);if(!m)throw new Error("Fehler in "+teil+". Bitte nochmal.");return JSON.parse(m[0]);}
+function parseJSON(data,teil){
+  var t=(data.content||[]).map(function(b){return b.text||"";}).join("");
+  t=t.replace(/```json/g,"").replace(/```/g,"");
+  var s=t.indexOf("{");
+  if(s<0)throw new Error("Fehler in "+teil+". Bitte nochmal.");
+  var depth=0,inStr=false,esc=false,end=-1;
+  for(var i=s;i<t.length;i++){
+    var c=t.charAt(i);
+    if(inStr){ if(esc){esc=false;} else if(c==="\\"){esc=true;} else if(c==="\""){inStr=false;} continue; }
+    if(c==="\""){inStr=true;continue;}
+    if(c==="{")depth++;
+    else if(c==="}"){depth--;if(depth===0){end=i;break;}}
+  }
+  if(end<0)throw new Error("ABGESCHNITTEN");
+  return JSON.parse(t.slice(s,end+1));
+}
+async function apiJSON(body,teil){
+  var data=await apiCall(body);
+  try{ return parseJSON(data,teil); }
+  catch(e){
+    var b2={};for(var k in body){b2[k]=body[k];}
+    b2.max_tokens=Math.min((body.max_tokens||1200)+1500,4000);
+    var d2=await apiCall(b2);
+    try{ return parseJSON(d2,teil); }
+    catch(e2){ throw new Error("Die Antwort war unvollständig ("+teil+"). Bitte nochmal auf den Button tippen."); }
+  }
+}
 function setLBar(p){el("lbar").style.width=p+"%";}
 function lblOf(arr,val){for(var i=0;i<arr.length;i++){if(arr[i][0]===val)return arr[i][1];}return val;}
 
@@ -414,15 +440,15 @@ async function analyse(){
   try{
     el("ltext").textContent="Deine Basis wird zusammengestellt";el("lsub").textContent="Schritt 1 von 3";setLBar(12);
     var p1='Du bist Stil-Beraterin von La Maison Vivante. Antworte NUR als JSON, ohne Markdown, ohne Vortext.\n\nProfil:\n'+userInfo+regeln+'\n\nWeitere Regeln:\n- Gehe konkret auf das Profil ein, keine Floskeln.\n- Die drei Basis-Teile sind drei verschiedene Grundteile (Oberteil, Unterteil, Lage). Keine zwei fast identischen Teile.\n\nErstelle: {"intro":{"titel":"Titel max 6 Wörter","text":"2 persönliche Sätze"},"palette":{"titel":"Palettenname","beschreibung":"1 Satz zu den Farben"},"basis":[{"nummer":"01","name":"Name inkl. Material und Farbe","beschreibung":"1 bis 2 kurze Sätze zu Schnitt und Material","tipp":"1 kurzer Tipp","suchbegriff":"Stichworte ohne Marke"},{"nummer":"02","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."},{"nummer":"03","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."}]}';
-    var part1=parseJSON(await apiCall({model:"claude-sonnet-4-6",max_tokens:1200,messages:[{role:"user",content:p1}]}),"Teil 1");
+    var part1=await apiJSON({model:"claude-sonnet-4-6",max_tokens:2400,messages:[{role:"user",content:p1}]},"Teil 1");
     var basisNamen=(part1.basis||[]).map(function(b){return b.name;}).join("; ");setLBar(40);
     el("ltext").textContent="Deine Schlüsselstücke werden ausgewählt";el("lsub").textContent="Schritt 2 von 3";
     var p2='Du bist Stil-Beraterin von La Maison Vivante. Antworte NUR als JSON, ohne Markdown, ohne Vortext.\n\nProfil:\n'+userInfo+'\n\nSchon dabei, NICHT wiederholen:\n'+basisNamen+regeln+'\n\nWeitere Regeln:\n- 5 Schlüsselstücke, andere Teile als oben. Kein Teil mit derselben Grundart UND Farbe wie oben.\n- Verschiedene Schnitte und Funktionen.\n\nErstelle: {"schluessel":[{"nummer":"04","name":"Name inkl. Material und Farbe","beschreibung":"1 knapper Satz","tipp":"1 kurzer Tipp","suchbegriff":"Stichworte ohne Marke"},{"nummer":"05","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."},{"nummer":"06","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."},{"nummer":"07","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."},{"nummer":"08","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."}]}';
-    var part2=parseJSON(await apiCall({model:"claude-sonnet-4-6",max_tokens:1100,messages:[{role:"user",content:p2}]}),"Teil 2");
+    var part2=await apiJSON({model:"claude-sonnet-4-6",max_tokens:2200,messages:[{role:"user",content:p2}]},"Teil 2");
     var schluesselNamen=(part2.schluessel||[]).map(function(b){return b.name;}).join("; ");setLBar(70);
     el("ltext").textContent="Deine Looks werden gebaut";el("lsub").textContent="Schritt 3 von 3, fast fertig";
     var p3='Du bist Stil-Beraterin von La Maison Vivante. Antworte NUR als JSON, ohne Markdown, ohne Vortext.\n\nProfil:\n'+userInfo+'\n\nVorhandene Teile:\n'+basisNamen+'; '+schluesselNamen+regeln+'\n\nWeitere Regeln:\n- 3 Akzente: Accessoires wie Tasche, Schuhe, Gürtel, Tuch, in Basisfarben. Tasche und Schuhe gleiche Basisfarbe.\n- 4 Looks: komplette Outfits aus den vorhandenen Teilen. Nenne je 2 bis 4 Teile beim Namen. Verschiedene Anlässe.\n\nErstelle: {"akzente":[{"nummer":"09","name":"Accessoire inkl. Material und Farbe","beschreibung":"1 knapper Satz","tipp":"1 kurzer Tipp","suchbegriff":"Stichworte ohne Marke"},{"nummer":"10","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."},{"nummer":"11","name":"...","beschreibung":"...","tipp":"...","suchbegriff":"..."}],"looks":[{"titel":"Anlass","teile":"Teil A, Teil B, Teil C","text":"1 knapper Satz"},{"titel":"Anlass","teile":"...","text":"..."},{"titel":"Anlass","teile":"...","text":"..."},{"titel":"Anlass","teile":"...","text":"..."}],"ersterSchritt":{"titel":"Konkreter erster Schritt","text":"2 motivierende Sätze"}}';
-    var part3=parseJSON(await apiCall({model:"claude-sonnet-4-6",max_tokens:1200,messages:[{role:"user",content:p3}]}),"Teil 3");setLBar(96);
+    var part3=await apiJSON({model:"claude-sonnet-4-6",max_tokens:2400,messages:[{role:"user",content:p3}]},"Teil 3");setLBar(96);
     renderResults(Object.assign({_typ:S,_figur:figur,_basisColors:basisColors,_akzentColors:akzentColors},part1,part2,part3));
   }catch(err){
     el("loading").classList.remove("on");el("step5").classList.add("active");el("dots").style.display="flex";document.querySelector(".progress").style.display="block";
