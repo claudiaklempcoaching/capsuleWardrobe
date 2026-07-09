@@ -482,7 +482,7 @@ function renderResults(r){
   group("Die Akzente",r.akzente,"acc");
   if(r.looks&&r.looks.length){var h=document.createElement("div");h.className="sect-title";h.textContent="Deine Looks, aus wenigen Teilen";c.appendChild(h);r.looks.forEach(function(lk){var d=document.createElement("div");d.className="item look";d.innerHTML='<div class="nm">'+(lk.titel||"")+'</div><div class="teile">'+(lk.teile||"")+'</div><div class="ds">'+(lk.text||"")+'</div>';c.appendChild(d);});}
   if(r.ersterSchritt){var d=document.createElement("div");d.className="item first";d.style.marginTop="14px";d.innerHTML='<span class="num">erster Schritt</span><div class="nm">'+(r.ersterSchritt.titel||"")+'</div><div class="ds">'+(r.ersterSchritt.text||"")+'</div>';c.appendChild(d);}
-  el("ctaResult").innerHTML='<div class="ctabox"><span class="s">und jetzt</span><div class="t">Fang mit einem Stück an</div><p class="x">Hierbei handelt es sich um eine erste Basis. Erweitere deine Capsule Wardrobe gerne nach und nach. Du musst nicht alles auf einmal ändern. Nimm dir das erste Teil aus deiner Liste vor und merke, wie sich der Morgen damit anfühlt.</p><a href="https://la-maison-vivante.de" target="_blank">Zur Maison</a></div>';
+  el("ctaResult").innerHTML='<div class="ctabox"><span class="s">und jetzt</span><div class="t">Fang mit einem Stück an</div><p class="x">Hierbei handelt es sich um eine erste Basis. Erweitere deine Capsule Wardrobe gerne nach und nach. Du musst nicht alles auf einmal ändern. Nimm dir das erste Teil aus deiner Liste vor und merke, wie sich der Morgen damit anfühlt.</p><a href="https://lamaisonvivante.de" target="_blank">Zur Maison</a></div>';
   el("results").classList.add("on");scrollTo({top:0,behavior:"smooth"});
 }
 
